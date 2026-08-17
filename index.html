@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اودیسه — فرهنگ فناوری ایرانی و جهانی</title>
+<meta name="description" content="سه‌گانه‌ی گذشته، حال و آینده‌ی فرهنگ فناوری، ایرانی و جهانی.">
+<style>
+  :root{
+    --paper:#f7f4ec;
+    --ink:#1c1a16;
+    --line:#d8d0bf;
+    --past:#9c7a45;
+    --present:#a8442e;
+    --future:#33565a;
+    --active-color:var(--present);
+    --font-body:'Vazirmatn','IRANSans',Tahoma,sans-serif;
+    --font-display:'Vazirmatn','IRANSans',Tahoma,sans-serif;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.9;
+    overflow-x:hidden;
+  }
+
+  ::selection{background:var(--active-color);color:var(--paper);}
+
+  /* ── Masthead ─────────────────────────────── */
+  header.masthead{
+    text-align:center;
+    padding:5rem 1.5rem 4rem;
+    border-bottom:1px solid var(--line);
+  }
+  .eyebrow{
+    font-size:.8rem;
+    letter-spacing:.15em;
+    color:var(--active-color);
+    text-transform:uppercase;
+    margin-bottom:1rem;
+    transition:color .6s ease;
+  }
+  header.masthead h1{
+    font-family:var(--font-display);
+    font-weight:900;
+    font-size:clamp(2.2rem,6vw,4rem);
+    letter-spacing:-.01em;
+  }
+  header.masthead p.sub{
+    margin-top:1rem;
+    font-size:1.05rem;
+    color:#55503f;
+    max-width:36em;
+    margin-inline:auto;
+  }
+
+  /* ── Spine + windows ──────────────────────── */
+  main{position:relative;}
+
+  .spine{
+    position:absolute;
+    top:0; bottom:0; right:50%;
+    width:2px;
+    background:linear-gradient(to bottom,var(--past),var(--present),var(--future));
+    transform:translateX(1px);
+    z-index:1;
+  }
+
+  .era{
+    position:relative;
+    min-height:92vh;
+    display:flex;
+    align-items:center;
+    padding:5rem 1.5rem;
+    z-index:2;
+  }
+  .era:nth-of-type(even){flex-direction:row-reverse;}
+
+  .window{
+    flex:0 0 auto;
+    width:11rem; height:11rem;
+    border-radius:50%;
+    border:3px solid var(--line);
+    background:var(--paper);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    transition:transform .6s ease, border-color .6s ease, box-shadow .6s ease;
+    filter:grayscale(70%);
+    opacity:.55;
+    transform:scale(.85);
+  }
+  .window .label{
+    font-family:var(--font-display);
+    font-weight:800;
+    font-size:1.1rem;
+  }
+  .window .glyph{
+    position:absolute;
+    inset:0;
+    border-radius:50%;
+    opacity:.12;
+  }
+
+  .era.active .window{
+    filter:grayscale(0%);
+    opacity:1;
+    transform:scale(1);
+    border-color:var(--era-color);
+    box-shadow:0 0 0 8px color-mix(in srgb, var(--era-color) 12%, transparent);
+  }
+
+  .era[data-era="past"]{--era-color:var(--past);}
+  .era[data-era="present"]{--era-color:var(--present);}
+  .era[data-era="future"]{--era-color:var(--future);}
+
+  .content{
+    flex:1 1 auto;
+    max-width:34rem;
+    padding:0 3rem;
+  }
+  .era:nth-of-type(even) .content{padding-right:0;}
+  .era:nth-of-type(odd) .content{padding-left:0;}
+
+  .content .kicker{
+    font-size:.8rem;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--era-color);
+    margin-bottom:.6rem;
+  }
+  .content h2{
+    font-family:var(--font-display);
+    font-size:clamp(1.6rem,3.2vw,2.3rem);
+    margin-bottom:1rem;
+  }
+  .content p{
+    color:#403c30;
+    font-size:1.02rem;
+  }
+  .placeholder{
+    margin-top:1rem;
+    padding:.9rem 1.1rem;
+    border-right:3px solid var(--era-color);
+    background:color-mix(in srgb, var(--era-color) 6%, var(--paper));
+    font-size:.9rem;
+    color:#6b6552;
+  }
+
+  /* ── Dual-voice narrator device (بخش گذشته) ── */
+  .dual-voice{
+    margin-top:1.4rem;
+    display:flex;
+    flex-direction:column;
+    gap:1.1rem;
+  }
+  .voice{
+    position:relative;
+    padding:1rem 1.2rem;
+    border-radius:2px;
+    background:var(--paper);
+  }
+  .voice.khwarizmi{
+    border-right:3px solid var(--past);
+    background:color-mix(in srgb, var(--past) 6%, var(--paper));
+  }
+  .voice.turing{
+    border-right:3px solid var(--future);
+    background:color-mix(in srgb, var(--future) 6%, var(--paper));
+    margin-right:1.6rem;
+  }
+  .voice .who{
+    display:flex;
+    align-items:baseline;
+    gap:.5rem;
+    margin-bottom:.4rem;
+    font-family:var(--font-display);
+    font-weight:800;
+    font-size:.95rem;
+  }
+  .voice.khwarizmi .who{color:var(--past);}
+  .voice.turing .who{color:var(--future);}
+  .voice .who .place{
+    font-family:var(--font-body);
+    font-weight:400;
+    font-size:.78rem;
+    color:#847e68;
+  }
+  .voice p{
+    font-size:.96rem;
+    color:#403c30;
+  }
+  .thread{
+    width:2px;
+    height:1.1rem;
+    background:var(--line);
+    margin-right:1.4rem;
+  }
+
+  /* ── Talk-show roundtable (بخش حال/آینده) ──── */
+  .roundtable{
+    margin-top:1.4rem;
+    display:flex;
+    flex-wrap:wrap;
+    gap:.9rem;
+    align-items:center;
+  }
+  .seat{
+    display:flex;
+    align-items:center;
+    gap:.5rem;
+    padding:.5rem 1rem;
+    border:1px solid var(--line);
+    border-radius:999px;
+    font-size:.88rem;
+    color:#403c30;
+    background:var(--paper);
+  }
+  .seat .tag{
+    font-size:.7rem;
+    color:#847e68;
+  }
+  .seat.featured{
+    border-color:var(--era-color);
+    background:color-mix(in srgb, var(--era-color) 10%, var(--paper));
+    font-family:var(--font-display);
+    font-weight:800;
+    color:var(--era-color);
+    padding:.6rem 1.3rem;
+  }
+  .seat.featured .tag{color:var(--era-color);opacity:.75;}
+  .roundtable-note{
+    width:100%;
+    font-size:.85rem;
+    color:#847e68;
+    margin-top:.3rem;
+  }
+
+  /* ── Ink stamp ("بزودی") ──────────────────── */
+  .stamp{
+    width:6rem;
+    filter:url(#ink-bleed);
+    mix-blend-mode:multiply;
+    opacity:.9;
+    flex:0 0 auto;
+  }
+  .stamp .ring{fill:none;stroke:#9c2b1f;}
+  .stamp .ring-outer{stroke-width:3;}
+  .stamp .ring-inner{stroke-width:1.5;}
+  .stamp .stamp-text{
+    fill:#9c2b1f;
+    font-family:var(--font-display);
+    font-weight:800;
+    font-size:22px;
+    text-anchor:middle;
+  }
+  .stamp-wrap{
+    display:flex;
+    align-items:center;
+    gap:.4rem;
+  }
+  .stamp-wrap.rot-present .stamp{transform:rotate(-7deg);}
+  .stamp-wrap.rot-future .stamp{transform:rotate(6deg);}
+
+  /* ── Timeline strip ───────────────────────── */
+  .timeline{
+    margin-top:2rem;
+    display:flex;
+    gap:1.2rem;
+    overflow-x:auto;
+    padding-bottom:.6rem;
+    scrollbar-width:thin;
+  }
+  .timeline::-webkit-scrollbar{height:5px;}
+  .timeline::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px;}
+
+  .tl-item{
+    flex:0 0 auto;
+    width:9rem;
+    border-top:2px solid var(--era-color);
+    padding-top:.5rem;
+  }
+  .tl-item .yr{
+    font-family:var(--font-display);
+    font-weight:800;
+    font-size:.95rem;
+    color:var(--era-color);
+  }
+  .tl-item .desc{
+    font-size:.82rem;
+    color:#6b6552;
+    margin-top:.2rem;
+  }
+
+  /* ── Footer ───────────────────────────────── */
+  footer{
+    text-align:center;
+    padding:4rem 1.5rem 3rem;
+    border-top:1px solid var(--line);
+    font-size:.85rem;
+    color:#847e68;
+  }
+
+  /* ── Mobile ───────────────────────────────── */
+  @media (max-width:780px){
+    .spine{right:2rem;transform:none;}
+    .era, .era:nth-of-type(even){flex-direction:column;align-items:flex-start;padding-right:4rem;}
+    .window{width:7rem;height:7rem;margin-bottom:1.5rem;}
+    .content{padding:0 !important;max-width:none;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .window{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="ink-bleed" x="-30%" y="-30%" width="160%" height="160%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.06 0.09" numOctaves="3" seed="7" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="7" xChannelSelector="R" yChannelSelector="G" result="displaced"/>
+      <feGaussianBlur in="displaced" stdDeviation="0.5" result="soft"/>
+      <feColorMatrix in="soft" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 16 -6"/>
+    </filter>
+  </defs>
+</svg>
+
+<header class="masthead">
+  <div class="eyebrow">پرویز معین</div>
+  <h1>اودیسه</h1>
+  <p class="sub">سه‌گانه‌ی گذشته، حال و آینده‌ی فرهنگ فناوری، ایرانی و جهانی.</p>
+</header>
+
+<main>
+  <div class="spine"></div>
+
+  <section class="era" data-era="past" id="past">
+    <div class="window"><span class="label">گذشته</span></div>
+    <div class="content">
+      <div class="kicker">بخش اول · دو راوی، هزار و صد سال فاصله</div>
+      <h2>گذشته</h2>
+      <p>
+        داستان گذشته را دو صدا روایت می‌کنند — نه پشت سرِ هم، بلکه در پژواکِ یکدیگر.
+        یکی در بغدادِ قرن نهم می‌نویسد، دیگری در منچسترِ قرن بیستم. فاصله‌شان یازده قرن است،
+        اما هر دو دنبال یک چیزند: قاعده‌ای که فکر را به حرکتی مکانیکی و قابل‌تکرار تبدیل کند.
+      </p>
+
+      <div class="dual-voice">
+        <div class="voice khwarizmi">
+          <div class="who">محمد بن موسی خوارزمی <span class="place">بغداد، بیت‌الحکمه، حدود ۸۲۰ م.</span></div>
+          <p>
+            «الجبر و المقابله» را نه برای زیبایی نوشتم، بلکه برای این‌که هر مسئله‌ای
+            — از تقسیم ارث تا اندازه‌گیری زمین — به چند گام ساده و تکرارپذیر فروکاسته شود.
+            قاعده‌ای که هرکس، حتی بی‌آن‌که بداند چرا کار می‌کند، بتواند دنبالش کند و به جواب برسد.
+            قرن‌ها بعد، نامم به کلمه‌ای بدل شد که هیچ‌گاه تصورش را نمی‌کردم: الگوریتم.
+          </p>
+        </div>
+        <div class="thread"></div>
+        <div class="voice turing">
+          <div class="who">آلن تورینگ <span class="place">منچستر / کمبریج، ۱۹۳۶</span></div>
+          <p>
+            در مقاله‌ی «On Computable Numbers» پرسیدم: چه چیزهایی را می‌توان با دنبال‌کردن
+            صِرف یک دستورالعمل محاسبه کرد؟ ماشینی تصور کردم که نه می‌فهمد و نه می‌اندیشد،
+            فقط قدم‌به‌قدم قاعده را اجرا می‌کند. همان قاعده‌ای که خوارزمی یازده قرن پیش
+            به زبان جبر نوشته بود، من به زبان ماشین ترجمه کردم.
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="tl-item"><div class="yr">حدود ۸۲۰ م.</div><div class="desc">خوارزمی «الجبر و المقابله» را در بیت‌الحکمه بغداد می‌نویسد</div></div>
+        <div class="tl-item"><div class="yr">قرن ۱۲ م.</div><div class="desc">ترجمه‌ی لاتین آثار خوارزمی در اروپا؛ ریشه‌ی واژه‌ی algorismus</div></div>
+        <div class="tl-item"><div class="yr">۱۹۳۶</div><div class="desc">تورینگ مفهوم «ماشین تورینگ» را در مقاله‌ی On Computable Numbers معرفی می‌کند</div></div>
+        <div class="tl-item"><div class="yr">۱۹۵۰</div><div class="desc">تورینگ «آزمون تورینگ» را برای سنجش هوش ماشینی پیشنهاد می‌دهد</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="era" data-era="present" id="present">
+    <div class="window"><span class="label">حال</span></div>
+    <div class="content">
+      <div class="kicker">بخش دوم · میزبانِ گفت‌وگو</div>
+      <h2>حال</h2>
+      <p>
+        وضعیت امروز را یک نفر روایت نمی‌کند — می‌شنود. اینجا پرویز معین میزبانِ
+        میزگردی است با چند صدای دیگر، هرکدام از زاویه‌ای متفاوت به فناوریِ امروزِ
+        ایران و جهان نگاه می‌کنند.
+      </p>
+
+      <div class="roundtable" data-era="present" style="--era-color:var(--present);">
+        <div class="stamp-wrap rot-present">
+          <svg class="stamp" viewBox="0 0 120 120">
+            <circle class="ring ring-outer" cx="60" cy="60" r="52"/>
+            <circle class="ring ring-inner" cx="60" cy="60" r="44"/>
+            <text class="stamp-text" x="60" y="70">بزودی</text>
+          </svg>
+        </div>
+        <div class="seat featured">پرویز معین <span class="tag">میزبان</span></div>
+        <div class="seat">میهمان اول <span class="tag">—</span></div>
+        <div class="seat">میهمان دوم <span class="tag">—</span></div>
+        <div class="seat">میهمان سوم <span class="tag">—</span></div>
+        <div class="roundtable-note">جای‌نگه‌دار — نام و موضوع صحبتِ میهمانان بعداً اضافه می‌شود.</div>
+      </div>
+
+      <div class="timeline">
+        <div class="tl-item"><div class="yr">…</div><div class="desc">رویداد نمونه</div></div>
+        <div class="tl-item"><div class="yr">…</div><div class="desc">رویداد نمونه</div></div>
+        <div class="tl-item"><div class="yr">…</div><div class="desc">رویداد نمونه</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="era" data-era="future" id="future">
+    <div class="window"><span class="label">آینده</span></div>
+    <div class="content">
+      <div class="kicker">بخش سوم · میهمانِ آینده</div>
+      <h2>آینده</h2>
+      <p>
+        در آینده، جای پرویز معین با میهمانانش عوض می‌شود. این‌بار او میهمانِ
+        گفت‌وگویی است که دیگران درباره‌ی فردا از او می‌پرسند.
+      </p>
+
+      <div class="roundtable" data-era="future" style="--era-color:var(--future);">
+        <div class="stamp-wrap rot-future">
+          <svg class="stamp" viewBox="0 0 120 120">
+            <circle class="ring ring-outer" cx="60" cy="60" r="52"/>
+            <circle class="ring ring-inner" cx="60" cy="60" r="44"/>
+            <text class="stamp-text" x="60" y="70">بزودی</text>
+          </svg>
+        </div>
+        <div class="seat">میزبان اول <span class="tag">—</span></div>
+        <div class="seat">میزبان دوم <span class="tag">—</span></div>
+        <div class="seat featured">پرویز معین <span class="tag">میهمان</span></div>
+        <div class="roundtable-note">جای‌نگه‌دار — نام و موضوع پرسشِ میزبانان بعداً اضافه می‌شود.</div>
+      </div>
+
+      <div class="timeline">
+        <div class="tl-item"><div class="yr">…</div><div class="desc">رویداد نمونه</div></div>
+        <div class="tl-item"><div class="yr">…</div><div class="desc">رویداد نمونه</div></div>
+        <div class="tl-item"><div class="yr">…</div><div class="desc">رویداد نمونه</div></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  ارادتمند، پرویز معین · بخشی از <a href="https://parvizrahayan.github.io" style="color:inherit;">اکوسیستم پرویز معین</a>
+</footer>
+
+<script>
+  const eras = document.querySelectorAll('.era');
+  const root = document.documentElement;
+  const colors = { past:'#9c7a45', present:'#a8442e', future:'#33565a' };
+
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      entry.target.classList.toggle('active', entry.isIntersecting);
+      if(entry.isIntersecting){
+        root.style.setProperty('--active-color', colors[entry.target.dataset.era]);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  eras.forEach(e=>io.observe(e));
+</script>
+
+</body>
+</html>
